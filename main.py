@@ -1,4 +1,3 @@
-import json
 from os import environ
 from random import randint
 from time import sleep
@@ -10,6 +9,10 @@ import urllib3
 from loguru import logger
 
 from captcha import guess
+
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 
 # 默认配置
 defaults = {
@@ -38,6 +41,28 @@ class Checker(httpx.Client):
         super().__init__(verify=False)
         self.configs = configs
         self.headers = headers
+        
+        
+     def mailSend(self):
+
+        content = '打卡成功'
+        message = MIMEText(content, 'plain', 'utf-8')
+
+        message['From'] = Header("王康", 'utf-8')  
+        message['To'] =  Header("riptide", 'utf-8')
+        
+        subject = '疫情打卡提示'  #发送的主题，可自由填写
+        message['Subject'] = Header(subject, 'utf-8') 
+        try:
+            smtpObj = smtplib.SMTP_SSL(self.configs['mail_host'], 465) 
+            smtpObj.login(self.configs['sender'],self.configs['mail_pass'])  
+            smtpObj.sendmail(self.configs['sender'], self.configs['receiver'], message.as_string())
+            smtpObj.quit()
+            print('邮件发送成功')
+            
+        except smtplib.SMTPException as e:
+            print('邮件发送失败')
+        
 
     def checkin(self):
         logger.info('尝试打卡中...')
@@ -98,6 +123,8 @@ class Checker(httpx.Client):
                 if message in self.configs['success_tint']:
                     logger.info(f'服务器消息：{message}')
                     logger.info('自动打卡成功！')
+                    self.mailSend()
+                    
                     break
                 else:
                     raise RuntimeError(f'打卡失败：{message}')
