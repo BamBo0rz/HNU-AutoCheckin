@@ -59,6 +59,19 @@
   "password": "12345678"
 }
 ```
+* 如果需要开启邮件提醒则需要邮件提醒则至少需要 一个发送邮箱及授权码 以及 接受邮箱
+```json
+{
+  "student_id": "20202601xxxx",
+  "password": "12345678"
+  
+  // 邮箱功能
+  "mail_host": "<邮箱服务器>",
+  "mail_pass": "<发送邮箱授权码>",
+  "sender": "<发送邮箱地址>",
+  "receiver": "<接收邮箱地址>"
+}
+```
 
 * 或者你可以使用包含更多选项的配置文件：
 
@@ -66,6 +79,13 @@
 {
   "student_id": "<你的学号>",
   "password": "<个人门户登录密码>",
+  
+  // 邮箱功能
+  "mail_host": "smtp.qq.com",  
+  "mail_pass": "xxxxxxx",
+  "sender": "xxxxx@xxxxx",
+  "receiver": "xxxxx@xxxxx",
+  
   "random": false,
   "address": ["湖南省", "长沙市", "岳麓区", "湖南大学"],
    
@@ -80,6 +100,11 @@
 | 属性名 | 含义 |
 | :---: | :--- |
 | `student_id` | 学号 |
+| `password` | 个人门户登录密码 |
+| `mail_host` | 邮箱服务器，qq为smtp.qq.com |
+| `sender` | 发送邮箱地址 |
+| `receiver` | 接收邮箱授权码，可群发配置 |
+| `mail_pass` | 个人邮箱授权码 |
 | `password` | 个人门户登录密码 |
 | `random` | 是否随机体温（`true` 为 `36.3 - 36.8`, `false` 为 `36.5`），默认 `false` |
 | `address` | 地址，默认为湖南省、长沙市、岳麓区、湖南大学，其中**前三项请谨慎修改** |
