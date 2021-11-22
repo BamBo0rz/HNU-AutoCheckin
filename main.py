@@ -1,3 +1,4 @@
+import json
 from os import environ
 from random import randint
 from time import sleep
@@ -41,8 +42,7 @@ class Checker(httpx.Client):
         super().__init__(verify=False)
         self.configs = configs
         self.headers = headers
-        
-        
+     
     def mailSend(self):
 
         content = '打卡成功'
@@ -62,7 +62,6 @@ class Checker(httpx.Client):
             
         except smtplib.SMTPException as e:
             print('邮件发送失败')
-        
 
     def checkin(self):
         logger.info('尝试打卡中...')
