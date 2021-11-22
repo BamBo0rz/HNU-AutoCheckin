@@ -43,7 +43,7 @@ class Checker(httpx.Client):
         self.headers = headers
         
         
-     def mailSend(self):
+    def mailSend(self):
 
         content = '打卡成功'
         message = MIMEText(content, 'plain', 'utf-8')
