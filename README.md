@@ -80,7 +80,6 @@
   "student_id": "<你的学号>",
   "password": "<个人门户登录密码>",
   
-  // 邮箱功能
   "mail_host": "smtp.qq.com",  
   "mail_pass": "xxxxxxx",
   "sender": "xxxxx@xxxxx",
@@ -102,10 +101,9 @@
 | `student_id` | 学号 |
 | `password` | 个人门户登录密码 |
 | `mail_host` | 邮箱服务器，qq为smtp.qq.com |
-| `sender` | 发送邮箱地址 |
-| `receiver` | 接收邮箱授权码，可群发配置 |
 | `mail_pass` | 个人邮箱授权码 |
-| `password` | 个人门户登录密码 |
+| `sender` | 发送邮箱地址 |
+| `receiver` | 接收邮箱地址，可群发配置 |
 | `random` | 是否随机体温（`true` 为 `36.3 - 36.8`, `false` 为 `36.5`），默认 `false` |
 | `address` | 地址，默认为湖南省、长沙市、岳麓区、湖南大学，其中**前三项请谨慎修改** |
 | `max_trial` | 最大重试次数，超过此次数则认为打卡失败，默认为 `20` |
