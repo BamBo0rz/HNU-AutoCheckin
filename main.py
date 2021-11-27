@@ -43,9 +43,9 @@ class Checker(httpx.Client):
         self.configs = configs
         self.headers = headers
      
-    def mailSend(self):
+    def mailSend(self, message):
 
-        content = '打卡成功'
+        content = message
         message = MIMEText(content, 'plain', 'utf-8')
 
         message['From'] = Header("王康", 'utf-8')  
@@ -122,16 +122,19 @@ class Checker(httpx.Client):
                 if message in self.configs['success_tint']:
                     logger.info(f'服务器消息：{message}')
                     logger.info('自动打卡成功！')
-                    self.mailSend()
+                    if (message == '成功'):
+                        self.mailSend('打卡成功')
                     
                     break
                 else:
                     raise RuntimeError(f'打卡失败：{message}')
+                    sleep(self.configs['failed_wait'])
             except Exception as err:
                 logger.error(err)
                 logger.info(f'已失败 {trial + 1} 次，将于 {self.configs["failed_wait"]} 秒后重试')
                 sleep(self.configs['failed_wait'])
         else:
+            self.mailSend('打卡失败！')
             raise RuntimeError('重试次数过多！')
 
 
